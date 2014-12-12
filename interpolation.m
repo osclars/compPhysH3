@@ -1,5 +1,8 @@
 function [ finMatrix ] = interpolation( coarseMatrix )
-%INTERPOLATION Multigrid method: interpolates a coarser grid to a finer one
+%INTERPOLATION Multigrid method: interpolates a coarser grid to a finer
+%one.
+% FOr each point in the coarse grid the nearest neighbours are given 1/2 of 
+% its value, the next nearest neighbours are given 1/4.
 %   coarseMatrix = the matrix you would like to interpolate
 
 interpSize=size(coarseMatrix)*2-1; %the size of the interpolated matri
