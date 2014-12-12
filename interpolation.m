@@ -7,8 +7,8 @@ finMatrix=zeros(interpSize);
 v=coarseMatrix; % shorter name for the coarser grid
 
 %from coars to fine
-for i=2:size(coarseMatrix)-1
-    for j=2:size(coarseMatrix)-1
+for i=1:size(coarseMatrix)-1
+    for j=1:size(coarseMatrix)-1
         %horizontal: stepping through the rows
         finMatrix(2*i,2*j)=v(i,j); % elements:(even,even)
         finMatrix(2*i,2*j+1) = 1/2*(v(i,j)+v(i,j+1)); % elements:(even,odd)
