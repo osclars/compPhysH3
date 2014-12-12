@@ -1,21 +1,20 @@
-function [solution,maxError] = gaussSeidel(source, solution)
+function [solution,maxCorrection] = gaussSeidel(source, solution)
 % Function that runs one Gauss-Seidel cycle and returns the
 % updated solution and the largest correction to a value
-L=1;
-d=0.2;
 gridSize  = length(source);
 
-%TODO step size in here or outside?
-% difference for error and poisson
 lastValue = 0;
-maxError = 0; 
+maxCorrection = 0; 
+% don't go to edges due to boundery conditions
 for i =2:(gridSize-1)
      for j = 2:(gridSize-1)
+         %save last value to compare
           lastValue = solution(i,j);
+          % caclulate new value
           solution(i,j) = (solution(i-1,j) + solution(i+1,j) + solution(i,j-1) + solution(i,j+1))/4 + source(i,j);
-          lastError = abs(lastValue - solution(i,j));
-          if  lastError > maxError
-              maxError = lastError; 
+          lastCorrection = abs(lastValue - solution(i,j));
+          if  lastCorrection > maxCorrection
+              maxCorrection = lastCorrection; 
           end
      end
 end
