@@ -2,7 +2,7 @@ function [ finMatrix ] = interpolation( coarseMatrix )
 %INTERPOLATION Multigrid method: interpolates a coarser grid to a finer one
 %   coarseMatrix = the matrix you would like to interpolate
 
-interpSize=size(coarseMatrix)*2+1; %the size of the interpolated matri
+interpSize=size(coarseMatrix)*2-1; %the size of the interpolated matri
 finMatrix=zeros(interpSize);
 v=coarseMatrix; % shorter name for the coarser grid
 

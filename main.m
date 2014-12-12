@@ -22,6 +22,7 @@ source(diPoleX2,diPoleY) = 1;
 % For plotting
 stepsize = L/ (fineSize - 1);
 [plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
+errorMain = tol +1;
 while errorMain > tol
     % Presmooth TODO how much is a few
     for i=1:3
