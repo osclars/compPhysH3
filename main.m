@@ -55,3 +55,6 @@ while errorMain > tol
 
     end
 end
+
+surf(plotX, plotY, solution)
+set(gca,'fontsize',16);
