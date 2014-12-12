@@ -1,5 +1,6 @@
 function [solution,maxError] = gaussSeidel(source, solution)
-
+% Function that runs one Gauss-Seidel cycle and returns the
+% updated solution and the largest correction to a value
 L=1;
 d=0.2;
 gridSize  = length(source);
