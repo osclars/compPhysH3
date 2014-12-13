@@ -1,4 +1,4 @@
-%% Task 1
+%% V-cycle 
 clearvars
 tol = 10^-5; % used for both main while loop and solving residual equation. 
 coarseSize = 11;
