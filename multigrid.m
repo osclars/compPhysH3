@@ -4,7 +4,6 @@ tol = 10^-5; % used for both main while loop and solving residual equation.
 currentSize = length(solution);
 coarsestSize = 11;
 file = fopen('gridsizes.data','a');
-%fwrite(file,currentSize);
 fprintf(file,'%d\n',currentSize);
 fclose(file);
 
@@ -31,16 +30,11 @@ else
     coarseSize = length(residualCoarse);
     coarseError = zeros(coarseSize);
 
-    % Recursive step ones for V-cycle
+    % Recursive step ones for V-cycle, twice for W-cycle
     for i = 1:gamma
         coarseError = multigrid(residualCoarse, coarseError, gamma);
     end
 
-    file = fopen('gridsizes.data','a');
-    %TODO is it good to print in else?
-    %fwrite(file,currentSize);
-    fprintf(file,'%d\n',currentSize);
-    fclose(file);
     % Interpolate solution to fine grid
     errorFine = interpolation(coarseError);
 
@@ -51,5 +45,8 @@ else
     for i=1:3
         [solution,errorMain] = gaussSeidel(source,solution);
     end
+    file = fopen('gridsizes.data','a');
+    fprintf(file,'%d\n',currentSize);
+    fclose(file);
 end
 

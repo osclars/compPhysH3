@@ -1,6 +1,6 @@
 % Uppgift 2
 clearvars
-startSize = 1281;
+startSize = 81;
 gamma = 2;
 
 % remove old values from file
@@ -30,13 +30,16 @@ source(diPoleX2,diPoleY) = 1;
 solution = multigrid(source, solution, gamma);
 % -----Plotting-----
 % plot solution
-stepsize = L/ (startSize - 1);
-[plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
+%stepsize = L/ (startSize - 1);
+%[plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
+%%mesh(plotX, plotY, solution)
+%surf(plotX,plotY,solution,'EdgeColor','none')
+
 figure(1)
 clf
-%mesh(plotX, plotY, solution)
+x = linspace(0,L,startSize);
+plot(x,solution(:,diPoleY))
 set(gca,'fontsize',16);
-surf(plotX,plotY,solution,'EdgeColor','none')
 
 % plot change in grid sizes
 gridSizes = load('gridsizes.data');
