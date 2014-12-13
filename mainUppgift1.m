@@ -25,7 +25,7 @@ stepsize = L/ (fineSize - 1);
 errorMain = tol +1;
 nGS = 0;
 while errorMain > tol
-    % Presmooth TODO how much is a few
+
     for i=1:3
         nGS = nGS +1;
         [solution,errorMain] = gaussSeidel(source,solution);
@@ -33,14 +33,14 @@ while errorMain > tol
     end
 
     % Compute R
-    %times 4, probably not?
+
     residual = source + del2(solution);
 
     % Restrict R to coarser grid
     residualCoarse = restriction(residual);
 
     % Solve del2(E) = R
-    errorRes = 1;
+    errorRes = tol + 1;
     while errorRes > tol
         [errorCoarse, errorRes] = gaussSeidel(residualCoarse, errorCoarse);
     end
