@@ -1,6 +1,6 @@
 % Uppgift 2
 clearvars
-startSize = 81;
+startSize = 1281;
 gamma = 2;
 
 % remove old values from file
@@ -21,8 +21,8 @@ diPoleX1 = diPoleY + floor(d * startSize/2);
 diPoleX2 = diPoleY - floor(d * startSize/2);
 % source values are actually 1/stepsize^2 but it will cancel
 % in gaussSeidel cacluclation
-source(diPoleX1,diPoleY) = -1;
-source(diPoleX2,diPoleY) = 1;
+source(diPoleX1,diPoleY) = 1;
+source(diPoleX2,diPoleY) = -1;
 
 % -----Solve the problem-----
 
@@ -40,6 +40,7 @@ clf
 x = linspace(0,L,startSize);
 plot(x,solution(:,diPoleY))
 set(gca,'fontsize',16);
+grid on
 
 % plot change in grid sizes
 gridSizes = load('gridsizes.data');

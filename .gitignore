@@ -32,6 +32,7 @@
 *.swp
 *.png
 *.pdf
+*.eps
 \#*#
 *.bak
 *~

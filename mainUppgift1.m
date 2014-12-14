@@ -17,8 +17,8 @@ diPoleX1 = diPoleY + floor(d * fineSize/2);
 diPoleX2 = diPoleY - floor(d * fineSize/2);
 % source values are actually 1/stepsize^2 but it will cancel
 % in gaussSeidel cacluclation
-source(diPoleX1,diPoleY) = -1;
-source(diPoleX2,diPoleY) = 1;
+source(diPoleX1,diPoleY) = 1;
+source(diPoleX2,diPoleY) = -1;
 % For plotting
 stepsize = L/ (fineSize - 1);
 [plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
@@ -57,6 +57,8 @@ while errorMain > tol
 
     end
 end
-
-surf(plotX, plotY, solution)
+xPlot = linspace(0,L,fineSize);
+plot(xPlot,solution(:,diPoleY))
+grid on
+%surf(plotX, plotY, solution)
 set(gca,'fontsize',16);
