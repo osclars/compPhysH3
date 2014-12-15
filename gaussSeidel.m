@@ -11,7 +11,7 @@ for i =2:(gridSize-1)
          %save last value to compare
           lastValue = solution(i,j);
           % caclulate new value
-          solution(i,j) = (solution(i-1,j) + solution(i+1,j) + solution(i,j-1) + solution(i,j+1))/4 + source(i,j);
+          solution(i,j) = (solution(i-1,j) + solution(i+1,j) + solution(i,j-1) + solution(i,j+1) - source(i,j))/4;
           lastCorrection = abs(lastValue - solution(i,j));
           if  lastCorrection > maxCorrection
               maxCorrection = lastCorrection; 

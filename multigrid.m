@@ -23,7 +23,7 @@ else
 
     % Compute R
     % TODO how does this relate to in parameter with same name?
-    residual = source + del2(solution);
+    residual = source - 4*del2(solution);
 
     % Restrict R to coarser grid
     residualCoarse = restriction(residual);

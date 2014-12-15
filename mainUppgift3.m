@@ -22,8 +22,8 @@ diPoleX1 = diPoleY + floor(d * startSize/2);
 diPoleX2 = diPoleY - floor(d * startSize/2);
 % source values are actually 1/stepsize^2 but it will cancel
 % in gaussSeidel cacluclation
-source(diPoleX1,diPoleY) = 1;
-source(diPoleX2,diPoleY) = -1;
+source(diPoleX1,diPoleY) = -1;
+source(diPoleX2,diPoleY) = 1;
 
 % -----Solve the problem-----
 
@@ -57,11 +57,3 @@ plot(gridSizes,'*')
 set(gca,'fontsize',16);
 ylabel('Grid size','fontsize',20)
 
-% plot exact solution
-figure(3)
-clf
-exact = load('phi_exact_5000x5000.txt');
-xExact = linspace(0, L, length(exact));
-plot(xExact,exact)
-grid on
-set(gca,'fontsize',16);
