@@ -1,4 +1,4 @@
-function [solution] = multigrid(source, solution, gamma)
+function [solution, errorMain] = multigrid(source, solution, gamma)
 % for gamma=1 V-cycle, gamma = 2 W-cycle
 tol = 10^-5; % used for both main while loop and solving residual equation. 
 currentSize = length(solution);
@@ -23,16 +23,17 @@ else
 
     % Compute R
     % TODO how does this relate to in parameter with same name?
-    residual = source - 4*del2(solution);
+    stepsize = 1/(length(solution)-1);
+    residual = source - 4*del2(solution, stepsize);
 
     % Restrict R to coarser grid
     residualCoarse = restriction(residual);
     coarseSize = length(residualCoarse);
     coarseError = zeros(coarseSize);
 
-    % Recursive step ones for V-cycle, twice for W-cycle
+    % Recursive step once for V-cycle, twice for W-cycle
     for i = 1:gamma
-        coarseError = multigrid(residualCoarse, coarseError, gamma);
+        coarseError  = multigrid(residualCoarse, coarseError, gamma);
     end
 
     % Interpolate solution to fine grid

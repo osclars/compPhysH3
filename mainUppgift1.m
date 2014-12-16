@@ -15,8 +15,9 @@ diPoleX1 = diPoleY + floor(d * fineSize/2);
 diPoleX2 = diPoleY - floor(d * fineSize/2);
 % source values are actually 1/stepsize^2 but it will cancel
 % in gaussSeidel cacluclation
-source(diPoleX1,diPoleY) = -1;
-source(diPoleX2,diPoleY) = 1;
+stepsize = L/ (fineSize - 1);
+source(diPoleX1,diPoleY) = -1/ stepsize^2;
+source(diPoleX2,diPoleY) = 1/ stepsize^2;
 
 errorMain = tol +1;
 nGS = 0;
@@ -28,7 +29,7 @@ while errorMain > tol
 
     % Compute R
 
-    residual = source -4* del2(solution);
+    residual = source -4* del2(solution, stepsize);
 
     % Restrict R to coarser grid
     residualCoarse = restriction(residual);
@@ -55,7 +56,6 @@ end
 xPlot = linspace(0,L,fineSize);
 plot(xPlot,solution(:,diPoleY))
 grid on
-%stepsize = L/ (fineSize - 1);
 %[plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
 %surf(plotX, plotY, solution)
 set(gca,'fontsize',16);

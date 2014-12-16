@@ -1,6 +1,7 @@
 % Uppgift 3
 clearvars
-startSize = 11;
+startSize = 6;
+currentSize = startSize;
 
 gamma = 1;
 
@@ -12,41 +13,43 @@ fclose(file);
 L=1;% length of system
 d=0.2; %separation of poles in x
 
-source = zeros(startSize);
 solution = zeros(startSize);
-residual = zeros(startSize);
+residual = interpolation(zeros(startSize));
 
-% indexes for dipole
-diPoleY = floor(startSize / 2) +1;
-diPoleX1 = diPoleY + floor(d * startSize/2);
-diPoleX2 = diPoleY - floor(d * startSize/2);
-% source values are actually 1/stepsize^2 but it will cancel
-% in gaussSeidel cacluclation
-source(diPoleX1,diPoleY) = -1;
-source(diPoleX2,diPoleY) = 1;
 
 % -----Solve the problem-----
 
 %TODO where is main tol condition?
 for i = 1:8
-    solution = multigrid(source, solution, gamma);
     solution = interpolation(solution);
-    source = interpolation(source);
+    currentSize = length(solution);
+    source = zeros(currentSize);
+    % indexes for dipole
+    diPoleY = floor(currentSize / 2) +1;
+    diPoleX1 = diPoleY + floor(d * currentSize/2);
+    diPoleX2 = diPoleY - floor(d * currentSize/2);
+    stepsize = 1/ (currentSize - 1);
+    source(diPoleX1,diPoleY) = -1/ stepsize^2;
+    source(diPoleX2,diPoleY) = 1/ stepsize^2;
+
+    solution = multigrid(source, solution, gamma);
 end
 stopSize = length(solution);
 % -----Plotting-----
-% plot solution
-%stepsize = L/ (stopSize - 1);
-%[plotX, plotY] = meshgrid(0:stepsize:L,0:stepsize:L);
-%%mesh(plotX, plotY, solution)
-%surf(plotX,plotY,solution,'EdgeColor','none')
 
 figure(1)
 clf
+hold all
 x = linspace(0,L,stopSize);
-plot(x,solution(:,diPoleY))
+plotExact
+plot(x,solution(:,diPoleY),'--b')
+[maxValue,maxIndex] = max(solution(:,diPoleY));
+[minValue,minIndex] = min(solution(:,diPoleY));
+plot(x(minIndex), minValue, 'ob', 'MarkerSize', 10)
+plot(x(maxIndex), maxValue, 'ob', 'MarkerSize', 10)
 set(gca,'fontsize',16);
-
+grid on
+legend('Analytical solution', 'Full Multigrid-method', 'location', 'best');
 % plot change in grid sizes
 gridSizes = load('gridsizes.data');
 figure(2)

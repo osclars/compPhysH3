@@ -15,8 +15,7 @@ for i=2:restrictedSize-1
         term1 = 1/4*u(2*i-1,2*j-1);
         term2 = 1/8*(u(2*i-2,2*j-1)+u(2*i-1,2*j)+u(2*i,2*j-1)+u(2*i-1,2*j-2));
         term3 = 1/16*(u(2*i-2,2*j-2)+u(2*i-2,2*j)+u(2*i,2*j)+u(2*i,2*j-2));
-        %TODO why times 4?, do it in interpolation.m instead?
-        redMatrix(i,j)= 4*(term1+term2+term3);
+        redMatrix(i,j)= (term1+term2+term3);
     end
 end
 end
