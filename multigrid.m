@@ -13,11 +13,12 @@ fclose(file);
 
 % if on coarsest size, no recursive step
 if currentSize == coarsestSize
+    %TODO used own name for error (errorRes) herre before, but then errorMain will not be assigned in last recursive step
     % Solve del2(E) = R
-    errorRes = tol + 1;
+    errorMain = tol + 1;
     %solve residual equation
-    while errorRes > tol
-        [solution, errorRes] = gaussSeidel(source, solution);
+    while errorMain > tol
+        [solution, errorMain] = gaussSeidel(source, solution);
     end
 
 % for other sizes, solve with recursive step
@@ -37,6 +38,7 @@ else
     coarseError = zeros(coarseSize);
 
     % Recursive step: once for V-cycle, twice for W-cycle
+    %Put while loop here instead?
     for i = 1:gamma
         coarseError  = multigrid(residualCoarse, coarseError, gamma);
     end

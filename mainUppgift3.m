@@ -7,6 +7,8 @@ currentSize = startSize;
 % use v-cycle multigrid
 gamma = 1;
 
+tol = 10^-5;
+
 % remove old values from file that saves gridsizes
 file = fopen('gridsizes.data','w');
 fclose(file);
@@ -34,13 +36,16 @@ for i = 1:8
     source(diPoleX2,diPoleY) = 1/ stepsize^2;
 
     %solve problem whith a v-cycle multigrid with currentSize
-    solution = multigrid(source, solution, gamma);
+    maxCorrection = tol +1;
+    while maxCorrection > tol
+        [solution, maxCorrection] = multigrid(source, solution, gamma);
+    end
 end
 % for plotting x-vectors 
 stopSize = length(solution);
 % -----Plotting-----
 
-figure(1)
+figure(2)
 clf
 hold all
 x = linspace(0,L,stopSize);
@@ -57,7 +62,7 @@ legend('Analytical solution', 'Full Multigrid-method', 'location', 'best');
 
 % plot change in grid sizes
 gridSizes = load('gridsizes.data');
-figure(2)
+figure(3)
 clf
 hold on
 plot(gridSizes)
